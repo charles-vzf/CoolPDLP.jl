@@ -165,10 +165,33 @@ const OptimizerCache{T} = MOI.Utilities.GenericModel{
     },
 }
 
+MOI.default_cache(::Optimizer{T}, ::Type{T}) where {T} = MOI.Utilities.UniversalFallback(OptimizerCache{T}())
+
 function MOI.optimize!(dest::Optimizer{T}, src::MOI.ModelLike) where {T}
-    MOI.empty!(dest)
-    cache = OptimizerCache{T}()
+    cache = MOI.default_cache(dest, T)
     index_map = MOI.copy_to(cache, src)
+    MOI.optimize!(dest, cache)
+    return index_map, false
+end
+
+function _pass_attributes(dest::Optimizer{T}, cache::MOI.Utilities.UniversalFallback{OptimizerCache{T}}, index_map) where {T}
+    MOI.Utilities.pass_attributes(dest, cache, index_map, MOI.get(cache, MOI.ListOfVariableIndices()))
+
+    attrs = MOI.Utilities.ModelFilter(a -> !(a isa MOI.ObjectiveSense || a isa MOI.ObjectiveFunction), cache)
+    MOI.Utilities.pass_attributes(dest, attrs, index_map)
+
+    for (F, S) in MOI.get(cache, MOI.ListOfConstraintTypesPresent())
+        idxs = MOI.get(cache, MOI.ListOfConstraintIndices{F, S}())
+        MOI.Utilities.pass_attributes(dest, cache, index_map, idxs)
+    end
+
+    return cache.model
+end
+
+function MOI.optimize!(dest::Optimizer{T}, fcache::MOI.Utilities.UniversalFallback{OptimizerCache{T}}) where {T}
+    MOI.empty!(dest)
+    index_map = MOI.Utilities.identity_index_map(fcache)
+    cache = _pass_attributes(dest, fcache, index_map)
 
     n = cache.constraints.coefficients.n
     max_sense = cache.objective.sense == MOI.MAX_SENSE
