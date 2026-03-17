@@ -1,6 +1,7 @@
 # CoolPDLP.jl
 
 [![tests](https://github.com/gdalle/CoolPDLP.jl/actions/workflows/Test.yml/badge.svg?branch=main)](https://github.com/gdalle/CoolPDLP.jl/actions/workflows/Test.yml?query=branch%3Amain)
+[![Build status](https://badge.buildkite.com/abafb7c3f7e1fd1ab4672581e288ca9dd330120e2a66851ae9.svg?branch=main)](https://buildkite.com/julialang/coolpdlp-dot-jl)
 [![Coverage](https://codecov.io/gh/JuliaDecisionFocusedLearning/CoolPDLP.jl/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JuliaDecisionFocusedLearning/CoolPDLP.jl)
 [![docs:stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://JuliaDecisionFocusedLearning.github.io/CoolPDLP.jl/stable)
 [![docs:dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaDecisionFocusedLearning.github.io/CoolPDLP.jl/dev)
@@ -32,12 +33,13 @@ There are two ways to call the solver: either directly or via its [`JuMP.jl`](ht
 To use `CoolPDLP` with JuMP, select `CoolPDLP.Optimizer` and customize the options:
 
 ```julia
-using CoolPDLP, JuMP
+using CoolPDLP, JuMP, CUDA, CUDA.CUSPARSE
 
 model = Model(CoolPDLP.Optimizer)
 # Set `matrix_type` and `backend` to use GPU:
 set_attribute(model, "matrix_type", CUSPARSE.CuSparseMatrixCSR)
 set_attribute(model, "backend", CUDABackend())
+# Build and solve model as usual
 ```
 
 ## Why a new package?
