@@ -67,9 +67,12 @@ That's what makes it so cool.
 
 ## References
 
-> [PDLP: A Practical First-Order Method for Large-Scale Linear Programming](https://arxiv.org/abs/2501.07018), Applegate et al. (2025)
-
-> [An Overview of GPU-based First-Order Methods for Linear Programming and Extensions](https://arxiv.org/abs/2506.02174v1), Lu & Yang (2025)
+- [Practical Large-Scale Linear Programming using Primal-Dual Hybrid Gradient](https://arxiv.org/abs/2106.04756), Applegate et al. (2022)
+- [cuPDLP.jl: A GPU Implementation of Restarted Primal-Dual Hybrid Gradient for Linear Programming in Julia](https://arxiv.org/abs/2311.12180), Lu et al. (2024)
+- [cuPDLP-C: A Strengthened Implementation of cuPDLP for Linear Programming by C language](https://arxiv.org/abs/2312.14832), Lu et al. (2024)
+- [cuPDLPx: A Further Enhanced GPU-Based First-Order Solver for Linear Programming](https://arxiv.org/abs/2507.14051), Lu et al. (2025)
+- [PDLP: A Practical First-Order Method for Large-Scale Linear Programming](https://arxiv.org/abs/2501.07018), Applegate et al. (2025)
+- [An Overview of GPU-based First-Order Methods for Linear Programming and Extensions](https://arxiv.org/abs/2506.02174v1), Lu & Yang (2025)
 
 ## Roadmap
 

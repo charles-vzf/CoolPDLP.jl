@@ -22,8 +22,8 @@ makedocs(;
         "tutorial.md",
         "api.md",
         "Dev docs" => [
+            "math.md",
             "internals.md",
-            "preconditioning.md",
         ],
     ],
 )
